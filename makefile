@@ -4,7 +4,7 @@
 all: clean run
 
 create-network:
-	if [ -z $$(docker network ls --filter name=app_net -q) ]; then \
+	if [ -z $$(docker network ls --filter name=app_net -q | grep app_net) ]; then \
 		docker network create app_net; \
 	fi
 
