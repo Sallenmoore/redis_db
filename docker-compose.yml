@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+    testdb:
+        image: redis/redis-stack
+        ports:
+            - "10002:6379"
+            - "10003:8001"
+        volumes:
+            - "testdata:/data"
+        container_name: testdb
+        networks:
+            - app_net
+    db:
+        image: redis/redis-stack-server
+        ports:
+            - "10001:8001"
+        volumes:
+            - "dbdata:/data"
+        container_name: test
+        networks:
+            - app_net
+volumes:
+    testdata:
+    dbdata:
+networks:
+    app_net:
+        name: app_net
+        external: True
