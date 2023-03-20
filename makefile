@@ -3,6 +3,18 @@
 
 all: clean run
 
+create-network:
+    if [ -z $$(docker network ls --filter name=app_net -q) ]; then \
+        docker network create app_net; \
+    fi
+
+run: create-network
+    
+	docker-compose up --build -d
+
+debug: create-network run
+	docker-compose logs --tail=0 --follow
+
 ###### CLEANING #######
 
 clean:
@@ -14,8 +26,4 @@ deepclean: clean
 	-sudo docker networks prune -f
 	-sudo docker system prune -a -f --volumes
 
-run:
-	docker-compose up --build -d
 
-debug: run
-	docker-compose logs --tail=0 --follow
