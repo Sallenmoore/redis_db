@@ -4,12 +4,11 @@
 all: clean run
 
 create-network:
-    if [ -z $$(docker network ls --filter name=app_net -q) ]; then \
-        docker network create app_net; \
-    fi
+	if [ -z $$(docker network ls --filter name=app_net -q) ]; then \
+		docker network create app_net; \
+	fi
 
 run: create-network
-    
 	docker-compose up --build -d
 
 debug: create-network run
