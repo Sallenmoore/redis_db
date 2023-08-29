@@ -3,15 +3,10 @@
 
 all: clean run
 
-create-network:
-	if [ -z $$(docker network ls --filter name=app_net -q | grep app_net) ]; then \
-		docker network create app_net; \
-	fi
-
-run: create-network
+run:
 	docker-compose up --build -d
 
-debug: create-network run
+debug: run
 	docker-compose logs --tail=0 --follow
 
 ###### CLEANING #######
