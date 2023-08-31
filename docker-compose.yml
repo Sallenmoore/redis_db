@@ -3,6 +3,8 @@ version: "3"
 services:
   testdb:
     image: redis/redis-stack:latest
+    env_file:
+      - .env
     ports:
       - "10003:6379"
       - "10004:8001"
