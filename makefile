@@ -1,5 +1,5 @@
 
-.PHONY: all run clean deepclean debug
+.PHONY: all run clean debug
 
 all: clean run
 
@@ -7,17 +7,12 @@ run:
 	docker-compose up --build -d
 
 debug: run
-	docker-compose logs --tail=0 --follow
+	docker-compose logs --follow
 
 ###### CLEANING #######
 
 clean:
-	docker rm -f $$(docker ps -a -q)
+	docker-compose down --remove-orphans
 
-deepclean: clean
-	-sudo docker container prune -f
-	-sudo docker image prune -f
-	-sudo docker networks prune -f
-	-sudo docker system prune -a -f --volumes
 
 

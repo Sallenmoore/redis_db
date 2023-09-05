@@ -2,23 +2,23 @@ version: "3"
 
 services:
   testdb:
-    image: redis/redis-stack:latest
-    env_file:
-      - .env
+    image: redis:latest
+    container_name: testdb
     ports:
       - "10003:6379"
-      - "10004:8001"
     volumes:
       - "./testdata:/data"
-    container_name: testdb
+      - "./redis.conf:/usr/local/etc/redis/redis.conf"
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
   db:
-    image: redis/redis-stack:latest
+    image: redis:latest
+    container_name: db
     ports:
       - "10001:6379"
-      - "10002:8001"
     volumes:
       - "./dbdata:/data"
-    container_name: db
+      - "./redis.conf:/usr/local/etc/redis/redis.conf"
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
 volumes:
   testdata:
   dbdata:
